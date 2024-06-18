@@ -1,0 +1,608 @@
+body {
+    background-color: #171717;
+    text-align: center;
+}
+
+h1 {
+    color: rgb(185, 185, 185);
+    font-size: 120px;
+    z-index: 1000;
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+h2 {
+    color: rgb(185, 185, 185);
+    font-size: 50px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-box {
+    width: 300px;
+    padding: 40px;
+    background-color: #e7e7e7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .login-box h2 {
+    margin: 0 0 20px;
+    padding: 0;
+    color: #333;
+    text-align: center;
+  }
+  
+  .textbox {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .textbox input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .btn {
+    width: 106%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #a83333;
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+  }
+
+  
+  .btn:hover {
+    background-color: #5be26b;
+    border-radius: 40px;
+    color: #000000;
+  }
+
+  .quiz-box {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+  }
+  
+  input[type="radio"] {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  label {
+    text-align:left;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #03a9f4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #5b93e2;
+    border-radius: 40px;
+    color: #000000;
+  }
+
+
+  .question-sheet {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9b7;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.question h2 {
+    margin-bottom: 10px;
+}
+
+.question p {
+    margin: 0;
+}
+
+#confetti{
+	background: #000;
+	height: 100%;
+	left: 0px;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: -1;
+}
+
+h3 {
+  color: #ccc;
+}
+
+.pull{
+  width: 100%;
+}
+.radio-container {
+  padding: 5px;
+  background-color: #fffcfc;
+  border: 2px solid #cecbcb;
+  border-radius: 20px;
+  text-align: left;
+}
+
+.radio-container input {
+  width: 20px;
+  height: 20px;
+}
+
+#timer {
+  color: #cecbcb;
+}
+
+.imge {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #141414;
+}
+
+.login-box {
+  position: relative;
+  width: 360px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.login-box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+
+.login-box .submit-btn {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #03e9f4;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 40px;
+  letter-spacing: 4px;
+}
+
+.login-box .submit-btn:hover {
+  background: #03e9f4;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #03e9f4,
+              0 0 25px #03e9f4,
+              0 0 50px #03e9f4,
+              0 0 100px #03e9f4;
+}
+
+.login-box .submit-btn span {
+  position: absolute;
+  display: block;
+}
+
+.login-box .submit-btn span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03e9f4);
+  animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+  0% {
+      left: -100%;
+  }
+  50%, 100% {
+      left: 100%;
+  }
+}
+
+.login-box .submit-btn span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #03e9f4);
+  animation: btn-anim2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes btn-anim2 {
+  0% {
+      top: -100%;
+  }
+  50%, 100% {
+      top: 100%;
+  }
+}
+
+.login-box .submit-btn span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #03e9f4);
+  animation: btn-anim3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes btn-anim3 {
+  0% {
+      right: -100%;
+  }
+  50%, 100% {
+      right: 100%;
+  }
+}
+
+.login-box .submit-btn span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #03e9f4);
+  animation: btn-anim4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes btn-anim4 {
+  0% {
+      bottom: -100%;
+  }
+  50%, 100% {
+      bottom: 100%;
+  }
+}
+
+
+
+.dark-theme-header {
+  position: relative;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  width: 100%;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+.dark-theme-header .logo {
+  margin-top: 3%;
+  margin-right: 40%;
+  font-size: 50px;
+  color: #03e9f4;
+  font-weight: bold;
+}
+
+.dark-theme-header nav {
+  display: flex;
+}
+
+.dark-theme-header .nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.dark-theme-header .nav-links li {
+  margin-left: 20px;
+}
+
+.dark-theme-header .nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1em;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.dark-theme-header .nav-links a::before,
+.dark-theme-header .nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #03e9f4;
+  transition: width 0.3s;
+  opacity: 0.7;
+}
+
+.dark-theme-header .nav-links a::after {
+  left: auto;
+  right: 0;
+}
+
+.dark-theme-header .nav-links a:hover::before,
+.dark-theme-header .nav-links a:hover::after {
+  width: 100%;
+}
+
+.school-logo {
+  padding-top: 3%;
+  padding-left: 4%;
+  width: 70px;
+  height: 70px;
+}
+
+.congrats-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.congrats-message h1 {
+  font-size: 3em;
+  color: #03e9f4;
+  margin: 0;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.congrats-message p {
+  font-size: 1.5em;
+  color: #fff;
+  margin-top: 10px;
+  animation: fadeIn 2s ease-in-out 1s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+
+
+.quiz-container {
+  background-color: #c2c1c189;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.quiz-question {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.quiz-question input[type="radio"] {
+  display: none;
+}
+
+.quiz-question label {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.quiz-question label:hover {
+  background-color: #e0e0e0;
+}
+
+.quiz-question input[type="radio"]:checked + label {
+  background-color: #03a9f4;
+  color: #fff;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #222729;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.submit-btn:hover {
+  border-radius: 50px;
+  background-color: #0288d1;
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+
+
+
+
+
+.quiz-container {
+  max-width: 600px;
+  background-color: #8f8b8b85;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.quiz-container h4 {
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio {
+  display: none;
+}
+
+.custom-label {
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: #f2f2f2ab;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-label:hover {
+  background-color: #e0e0e0;
+}
+
+.question-name {
+  text-decoration: wavy;
+  color: #ffffff;
+}
+
+.radio:checked + .custom-label {
+  background-color: #055981;
+  color: #fff;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #333739;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #0288d1;
+  border-radius: 50px;
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.label-box {
+  margin: 100px 100px;
+}

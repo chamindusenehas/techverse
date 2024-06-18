@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quiz | TechVerse 2k24</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles1.css') }}">
+        
+    
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+    
+    </head>
+<body>
+  
+
+  {% include 'header.html' %}
+    
+
+
+    <div class="login-box">
+        <h2>welcome..</details></h2>
+        <form action="/submit" method="post">
+           <h3> {{ user }} </h3>
+          <div class="user-box">
+            <input type="text" name="username1" required>
+            <label>Player 1</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name="username2" required>
+            <label>Player 2</label>
+          </div>
+          
+
+          <div class="user-box">
+            <input type="text" name="username3" required>
+            <label>Player 3</label>
+          </div>
+
+          <div class="user-box">
+            <input type="text"  name="username4" required>
+            <label>Player 4</label>
+          </div>
+
+          <div class="user-box">
+            <input type="text"  name="username5" required>
+            <label>Player 5</label>
+          </div>
+          
+          <div class="user-box">
+            <input type="text"  name="username6" required>
+            <label>Player 6</label>
+          </div>
+
+
+          <div class="user-box">
+            <input type="text"  name="school" required>
+            <label>School</label>
+          </div>
+
+
+          <button type="submit" class="submit-btn" value="start">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Start
+        </button>
+        </form>
+      </div>
+
+
+
+
+
+
+    <canvas id="canvas"></canvas>
+    <script src="{{ url_for('static', filename='js/script1.js') }}"></script>
+</body>
+</html>

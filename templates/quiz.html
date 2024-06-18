@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | TechVerse 2k24</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles1.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="timer"></div>
+
+    <div class="quiz-container">
+        <form action="quiz" method="post">
+            <h4 class="question-name">{{ qnum }}: {{ gather[index]['question'] }}</h4>
+            {% for answer in gather[index]['options'] %}
+            <label class="label-box">
+                <div class="">
+                    <input type="radio" id="option_{{ loop.index }}" name="q{{ index }}" value="{{ answer }}" class="radio">
+                    <span class="custom-label">{{ answer }}</span>
+                </div>
+            </label><br>    
+            {% endfor %}
+            <button type="submit" id="newButton" class="submit-btn">{{ button }}</button>
+        </form>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script src="{{ url_for('static', filename='js/script3.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script1.js') }}"></script>
+</body>
+</html>

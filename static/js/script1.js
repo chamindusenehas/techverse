@@ -1,3 +1,5 @@
+
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -5,15 +7,15 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const dots = [];
-const numDots = 50;
+const numDots = 100;
 
 for (let i = 0; i < numDots; i++) {
     dots.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: Math.random() *2 -1,
-        vy: Math.random() *2 -1,
-        radius: 2,
+        vx: Math.random() * 2 - 1,
+        vy: Math.random() * 2 - 1,
+        radius: 1,
         color: '#FAEF5D'
     });
 }
@@ -24,7 +26,7 @@ function draw() {
     dots.forEach((dot, index) => {
         ctx.beginPath();
         ctx.fillStyle = dot.color;
-        ctx.arc(dot.x, dot.y, dot.radius,0,360);
+        ctx.arc(dot.x, dot.y, dot.radius, 0, 360);
         ctx.fill();
 
         for (let i = index + 1; i < dots.length; i++) {
@@ -32,7 +34,7 @@ function draw() {
             const distance = Math.sqrt((dot.x - otherDot.x) ** 2 + (dot.y - otherDot.y) ** 2);
             if (distance < 150) {
                 ctx.beginPath();
-                ctx.strokeStyle = 'red';
+                ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - distance / 150) + ')';
                 ctx.moveTo(dot.x, dot.y);
                 ctx.lineTo(otherDot.x, otherDot.y);
                 ctx.stroke();
@@ -62,4 +64,3 @@ function animate() {
 }
 
 animate();
-

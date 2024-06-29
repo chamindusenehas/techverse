@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Congratulations..</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles1.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles2.css') }}">
     
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,16 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="congrats-container">
-        <div class="congrats-message">
-            <h1>Congratulations!</h1>
-            <p>You have successfully completed the challenge.<br>
-                your score is {{ score }}
-            </p>
-        </div>
-        <canvas id="confetti-canvas"></canvas>
+<body class="end">
+    <div class="congrats-message">Congratulations!<br>
+        <p>your score is <b>{{ score }} </b></p>
     </div>
+    <div class="binary-container"></div>
+    <canvas id="canvas"></canvas>
+    
     <script src="{{ url_for('static', filename='js/script2.js') }}"></script>
 </body>
 </html>

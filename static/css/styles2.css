@@ -1,0 +1,67 @@
+.congrats-message {
+    position: absolute;
+    font-size: 3rem;
+    color: rgb(1, 118, 1);
+    text-align: center;
+    z-index: 10;
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+  
+  .binary-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+    pointer-events: none;
+  }
+  
+  .binary {
+    font-size: 1rem;
+    animation: binaryFall linear infinite;
+  }
+  
+  @keyframes binaryFall {
+    0% {
+        transform: translateY(-100vh);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+  }
+  
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .end {
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    margin: 0;
+    color: rgb(0, 225, 255);
+  }

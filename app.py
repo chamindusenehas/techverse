@@ -91,7 +91,7 @@ def quizz():
             con = False
             showed.append(unique_random_integer)
 
-    if len(showed) < 40 :
+    if len(showed) <= 40 :
         print(len(showed))
         question_number += 1
         if len(showed) >= 40:

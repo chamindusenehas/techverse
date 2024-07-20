@@ -11,6 +11,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
   </head>
   <body>
+
+    {% if txt: %}
+        <div class="notification" id="notification">
+            {% if txt == 'yes': %}
+                <span class="notification-message" id="notification-message">invalid username or password!</span>
+            {% elif txt == 'no': %}
+                <span class="notification-message" id="notification-message">username already exist!</span>
+            {% endif %}
+            <button class="notification-close" onclick="closeNotification()">×</button>
+        </div>
+        <script>
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                const notificationMessage = document.getElementById('notification-message');
+                
+                notificationMessage.textContent = message;
+                notification.style.display = 'flex';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+
+            function closeNotification() {
+                const notification = document.getElementById('notification');
+                notification.style.display = 'none';
+            }
+
+            function validateLogin() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                if (username !== 'validUser' || password !== 'validPassword') {
+                    showNotification('Invalid username or password');
+                } else {
+                    alert('Login successful!');
+                }
+            }
+        </script>
+    {% endif %}
+
       <div class="dark-theme-header">
           <img src="{{ url_for('static', filename='images/logo_tcc.png') }}" alt="Logo" class="school-logo">
           <div class="logo">TechVerse 2k24</div>
@@ -35,7 +76,7 @@
   
           <div id="register-form" class="form hidden">
               <h2>Register</h2>
-              <form action="/register" method="post">
+              <form action="/submit" method="post">
                   <div class="user-box">
                       <input type="text" name="username" required>
                       <label>Username</label>

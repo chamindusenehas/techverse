@@ -43,15 +43,36 @@ def submit():
     password = request.form['password']
     try:
         school = request.form['school']
-        collection.insert_one({
-            'username': username,
-            'password': password,
-            'school': school,
-            'score': 0}
-        )
+        x = 0
+        for y in collection.find({'username':username}):
+            if y['username'] == username:
+                x = 1
+            else:
+                x = 0
+        if x == 1:
+            return render_template('coder.html',txt='no')
+        else:
+            collection.insert_one({
+                'username': username,
+                'password': password,
+                'school': school,
+                'quiz-score': 0,
+                'ai-score':0,
+                'web-score':0,
+                'cyber-score':0,
+                }
+            )
+            return render_template('main.html')
     except:
-        pass
-    return render_template('main.html')
+        try:
+            if not(collection.find({'username': username})) :
+                return render_template('coder.html',txt='yes')
+            elif password != collection.find_one({'username':username})['password']:
+                return render_template('coder.html',txt='yes')
+            else:
+                return render_template('main.html')
+        except:
+            return render_template('coder.html',txt='yes')
 
 @app.route('/submit',methods=['GET'])
 def submitt():
@@ -89,7 +110,7 @@ def quizz():
     answersheet = request.form.get(f'q{unique_random_integer}')
     if answersheet == json_data[unique_random_integer]['answer']:
         score += 5
-        collection.update_one({'username':username},{'$set':{'score':score}})
+        collection.update_one({'username':username},{'$set':{'quiz-score':score}})
 
 
     con = True
@@ -101,7 +122,7 @@ def quizz():
             con = False
             showed.append(unique_random_integer)
 
-    if len(showed) <= 2 :
+    if len(showed) <= 40 :
         question_number += 1
         if len(showed) >= 40:
             return render_template('quiz.html',gather=json_data,index=unique_random_integer,qnum=question_number,button='submit')
@@ -111,8 +132,9 @@ def quizz():
         print(f'{len(showed)} end')
         showed = []
         question_number = 1
-        collection.update_one({'username':username},{'$set':{'score':score}})
+        collection.update_one({'username':username},{'$set':{'quiz-score':score}})
         unique_random_integer = 0
+        score = 0
         
         return redirect(url_for('submit'))
 

@@ -1,84 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Quiz | TechVerse 2k24</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles1.css') }}">
-        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>waiting...</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles3.css') }}">
     
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
-    
-    </head>
-<body>
-  
-
-  <div class="dark-theme-header">
-    <img src="{{ url_for('static', filename='images/logo_tcc.png') }}" alt="Logo" class="school-logo">
-    <div class="logo">Techverse 24</div>
-  </div>
-    
-
-
-    <div class="login-box">
-        <h2>welcome..</details></h2>
-        <form action="/submit" method="post">
-           <h3> {{ user }} </h3>
-          <div class="user-box">
-            <input type="text" name="username1" required>
-            <label>Player 1</label>
-          </div>
-          <div class="user-box">
-            <input type="text" name="username2" required>
-            <label>Player 2</label>
-          </div>
-          
-
-          <div class="user-box">
-            <input type="text" name="username3" required>
-            <label>Player 3</label>
-          </div>
-
-          <div class="user-box">
-            <input type="text"  name="username4" required>
-            <label>Player 4</label>
-          </div>
-
-          <div class="user-box">
-            <input type="text"  name="username5" required>
-            <label>Player 5</label>
-          </div>
-          
-          <div class="user-box">
-            <input type="text"  name="username6" required>
-            <label>Player 6</label>
-          </div>
-
-
-          <div class="user-box">
-            <input type="text"  name="school" required>
-            <label>School</label>
-          </div>
-
-
-          <button type="submit" class="submit-btn" value="start">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Start
-        </button>
-        </form>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Reddit+Mono:wght@200..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+      <div class="dark-theme-header">
+          <img src="{{ url_for('static', filename='images/logo_tcc.png') }}" alt="Logo" class="school-logo">
+          <div class="logo">TechVerse 2k24</div>
       </div>
-
-
-
-
-
-
-    <canvas id="matrix"></canvas>
-    <script src="{{ url_for('static', filename='js/script4.js') }}"></script>
-</body>
-</html>
+  
+      <div class="form-container">
+          <div id="login-form" class="form">
+              <h2>Login</h2>
+              <form action="/submit" method="post">
+                  <div class="user-box">
+                      <input type="text" name="username" required>
+                      <label>Username</label>
+                  </div>
+                  <div class="user-box">
+                      <input type="password" name="password" required>
+                      <label>Password</label>
+                  </div>
+                  <button type="submit" class="submit-btn">Login</button>
+              </form>
+              <p>are you a new player for this?<br><div class="clickhere" onclick="showRegister()">click here....</div></p></button>
+          </div>
+  
+          <div id="register-form" class="form hidden">
+              <h2>Register</h2>
+              <form action="/register" method="post">
+                  <div class="user-box">
+                      <input type="text" name="username" required>
+                      <label>Username</label>
+                  </div>
+                  <div class="user-box">
+                      <input type="password" name="password" required>
+                      <label>Password</label>
+                  </div>
+                  <div class="user-box">
+                      <input type="text" name="school" required>
+                      <label>School</label>
+                  </div>
+                  <button type="submit" class="submit-btn">Register</button>
+              </form>
+              <p>are you have logged before?<br><div class="clickhere"  onclick="showLogin()">click here....</div></p></button>
+          </div>
+      </div>
+  
+      <canvas id="matrix"></canvas>
+      <script src="{{ url_for('static', filename='js/script4.js') }}"></script>
+      <script>
+          function showRegister() {
+              document.getElementById('login-form').classList.add('hidden');
+              document.getElementById('register-form').classList.remove('hidden');
+          }
+  
+          function showLogin() {
+              document.getElementById('register-form').classList.add('hidden');
+              document.getElementById('login-form').classList.remove('hidden');
+          }
+      </script>
+  </body>
+  </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | TechVerse 2k24</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles4.css') }}">
+</head>
+<body>
+    {% if text: %}
+        <div class="notification" id="notification">
+            <span class="notification-message">You have successfully completed the quiz challenge!</span>
+            <button class="notification-close" onclick="closeNotification()">×</button>
+            <script>
+                function closeNotification() {
+                var notification = document.getElementById('notification');
+                notification.style.display = 'none';
+                }
+            </script>
+        </div>
+    {% endif %}
+    <div class="header">
+        <h1>Upcoming Events</h1>
+    </div>
+
+    <div class="cards-container">
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/1_-ntL3Dsvc-dJ5cLGRtSuEw.gif') }}" alt="Event 1">
+            <div class="card-content">
+                <h2>Web development</h2>
+                <p>web development is very famous topic in IT field.</p>
+                <a href="#start1" class="btn">Start</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/cyber-attack.gif') }}" alt="Event 2">
+            <div class="card-content">
+                <h2>Cyber security</h2>
+                <p>the world hardest security job is cyber security.</p>
+                <a href="#start2" class="btn">Start</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/image_processing20200225-18103-o71767.gif') }}" alt="Event 3">
+            <div class="card-content">
+                <h2>Quiz competition</h2>
+                <p>with this scenario, you can check your knowledge in IT field.</p>
+                <a href="/quiz" class="btn">Start</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/Intro-HELLO-FUTURE-1920x1080_v2.gif') }}" alt="Event 4">
+            <div class="card-content">
+                <h2>Artificial intelligence</h2>
+                <p>you can gain the world most emerging technology's practical kknowledge.</p>
+                <a href="#start4" class="btn">Start</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

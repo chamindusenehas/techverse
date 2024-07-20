@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #333;
+    color: #fff;
+    overflow: hidden;
+  }
+  .dark-theme-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #222;
+  }
+  .school-logo {
+    width: 50px;
+    height: 50px;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .form-container {
+    position: relative;
+    width: 300px;
+    margin: 100px auto;
+  }
+  .form-container .form {
+    position: absolute;
+    width: 100%;
+    transition: transform 0.6s ease-in-out;
+    transform: translateX(0);
+  }
+  .form-container .form.hidden {
+    transform: translateX(100%);
+  }
+  .form-container .form.register-hidden {
+    transform: translateX(-100%);
+  }
+  
+  .form {
+    text-align: center;
+    background-color: #444;
+    padding: 20px;
+    padding-right: 40px;
+    border-radius: 8px;
+  }
+  .form h2 {
+    margin: 0 0 20px;
+    text-align: center;
+  }
+  .form .user-box {
+    margin-bottom: 15px;
+  }
+  .form .user-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+  }
+  .form .user-box label {
+    display: block;
+    margin: 5px 0;
+  }
+  .form .submit-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .form .submit-btn:hover {
+    background: #0056b3;
+  }
+  
+  #matrix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  .hidden {
+    visibility: hidden;
+    z-index: -1;
+    transition: all ease-in-out;
+  }
+
+p{
+    font-size: 15px;
+    color: #b6b6b6;
+  }
+
+  
+.clickhere {
+    color: #0056b3;
+}
+
+.clickhere:hover {
+    color: #006de2;
+}

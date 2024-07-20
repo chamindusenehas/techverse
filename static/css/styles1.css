@@ -351,9 +351,9 @@ body {
 
 
 .dark-theme-header {
-  position: relative;
+  position: fixed;
   margin-top: 100px;
-  margin-bottom: 50px;
+  margin-bottom: 800px;
   width: 100%;
   background: #1a1a1a;
   display: flex;

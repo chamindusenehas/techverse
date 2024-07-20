@@ -1,9 +1,20 @@
 from flask import Flask,render_template,request, redirect, url_for
 import json
 import random
+from pymongo import MongoClient
+import time
 
 
 app = Flask(__name__)
+
+
+client = MongoClient('mongodb+srv://chamindusenehas:Chamee.19721@techverse.msx3fg5.mongodb.net/?retryWrites=true&w=majority&appName=techverse')
+db = client['quiz']
+collection = db['students']
+
+
+
+
 
 def load_json(filename):
     with open(filename, 'r') as file:
@@ -11,13 +22,9 @@ def load_json(filename):
     return data
 
 score = 0
-user1 = ''
-user2 = ''
-user3 = ''
-user4 = ''
-user5 = ''
-user6 = ''
+username = ''
 school = ''
+password = ''
 
 
 @app.route('/')
@@ -28,22 +35,27 @@ def home():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    global user1
-    global user2
-    global user3
-    global user4
-    global user5
-    global user6
     global school
-    user1 = request.form['username1']
-    user2 = request.form['username2']
-    user3 = request.form['username3']
-    user4 = request.form['username4']
-    user5 = request.form['username5']
-    user6 = request.form['username6']
+    global username
+    global password
+    global collection
+    username = request.form['username']
+    password = request.form['password']
+    try:
+        school = request.form['school']
+        collection.insert_one({
+            'username': username,
+            'password': password,
+            'school': school,
+            'score': 0}
+        )
+    except:
+        pass
+    return render_template('main.html')
 
-    school = request.form['school']
-    return redirect(url_for('quiz'))
+@app.route('/submit',methods=['GET'])
+def submitt():
+    return render_template('main.html',text='yes')
 
 question_number = 1
 showed = []
@@ -70,17 +82,15 @@ def quizz():
     global score
     global unique_random_integer
     global question_number
-    global user2
-    global user1
-    global user3
-    global user4
-    global user5
-    global user6
     global school
+    global username
+    global collection
     json_data = load_json('data/questions.json')
     answersheet = request.form.get(f'q{unique_random_integer}')
     if answersheet == json_data[unique_random_integer]['answer']:
         score += 5
+        collection.update_one({'username':username},{'$set':{'score':score}})
+
 
     con = True
     while con == True:
@@ -91,8 +101,7 @@ def quizz():
             con = False
             showed.append(unique_random_integer)
 
-    if len(showed) <= 40 :
-        print(len(showed))
+    if len(showed) <= 2 :
         question_number += 1
         if len(showed) >= 40:
             return render_template('quiz.html',gather=json_data,index=unique_random_integer,qnum=question_number,button='submit')
@@ -102,29 +111,10 @@ def quizz():
         print(f'{len(showed)} end')
         showed = []
         question_number = 1
-        new_data = {'student1': user1,'student2':user2 ,'student3': user3,'student4':user4 ,'student5': user5,'student6':user6 , 'school': school,'score':score}
-
-        def load_data():
-            try:
-                with open('scores.json', "r") as file:
-                    data = json.load(file)
-            except:
-                data = {}
-            return data
+        collection.update_one({'username':username},{'$set':{'score':score}})
+        unique_random_integer = 0
         
-        def save_data(data):
-            with open('scores.json', "w") as file:
-                json.dump(data, file, indent=4)
-        data = load_data()
-        cond = True
-        while cond ==True:
-            random_number = random.randint(0,1000)
-            if f'{random_number}' not in data:
-                cond = False
-                data[f"{random_number}"] = new_data
-                save_data(data)
-        
-        return render_template('completed.html',score=score)
+        return redirect(url_for('submit'))
 
 if __name__ == '__main__':
     with app.app_context():

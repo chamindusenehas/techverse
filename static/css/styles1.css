@@ -607,3 +607,60 @@ body {
   margin: 100px 100px;
 }
 
+#countdown{
+  background-color: transparent;
+  color: #2d7ce3;
+  font-size: 20px;
+  padding-bottom: 50px;
+}
+
+
+#newButton{
+  padding: 0;
+  margin: 0;
+  width: 0.0000001%;
+  background-color: transparent;
+  color: transparent;
+}
+
+.buzz-button {
+  border-radius: 20px;
+  background-color: #0288d1;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.buzz-button:hover {
+  background-color: #0269a1;
+  color: white;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
+}
+
+.touchability {
+  opacity: 0.5;
+  pointer-events: none;
+  visibility: visible;
+}
+
+.answer {
+  visibility: hidden;
+}
+
+#selected {
+  visibility:hidden;
+}
+
+#timed {
+  visibility:hidden;
+}

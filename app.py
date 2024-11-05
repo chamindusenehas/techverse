@@ -22,6 +22,7 @@ def load_json(filename):
     return data
 
 score = 0
+used_time = 0
 username = ''
 school = ''
 password = ''
@@ -56,6 +57,7 @@ def submit():
                 'username': username,
                 'password': password,
                 'school': school,
+                'used-time': 0,
                 'quiz-score': 0,
                 'ai-score':0,
                 'web-score':0,
@@ -80,6 +82,8 @@ def submitt():
 
 question_number = 1
 showed = []
+not_showed = [23, 33, 14, 7, 20, 28, 8, 24, 0, 1, 10, 19, 34, 11, 37, 18, 21, 9, 27, 6, 31, 26, 12, 38, 36, 35, 25, 17, 39, 2, 15, 4, 29, 3, 16, 32, 22, 5, 13, 30]
+
 score = 0
 unique_random_integer = 0
 
@@ -88,12 +92,13 @@ def quiz():
     global showed
     global unique_random_integer
     global question_number
+    question_number = 1
     showed =[]
+    global not_showed
     json_data = load_json('data/questions.json')
-    unique_random_integer = random.randint(0,39)
-    showed.append(unique_random_integer)
+    showed.append(0)
     print(len(showed))
-    return render_template('quiz.html',gather=json_data,index=unique_random_integer,qnum=question_number,button='next')
+    return render_template('quiz.html',gather=json_data,index=not_showed[0],qnum=question_number,button='next')
 
 
 
@@ -106,33 +111,27 @@ def quizz():
     global school
     global username
     global collection
+    global not_showed
+    global used_time
     json_data = load_json('data/questions.json')
-    answersheet = request.form.get(f'q{unique_random_integer}')
-    if answersheet == json_data[unique_random_integer]['answer']:
-        score += 5
-        collection.update_one({'username':username},{'$set':{'quiz-score':score}})
+    answersheet = request.form.get(f'q{0}')
+    score = request.form.get('beach')
+    collection.update_one({'username':username},{'$set':{'used-time':score}})
+    print(str(score) + 'this is the time lefted...' )
 
 
-    con = True
-    while con == True:
-        unique_random_integer = random.randint(0,40)
-        if not len(showed) <= 40:
-            break
-        if unique_random_integer not in showed:
-            con = False
-            showed.append(unique_random_integer)
+    numb = 0
+
 
     if len(showed) <= 40 :
         question_number += 1
-        if len(showed) >= 40:
-            return render_template('quiz.html',gather=json_data,index=unique_random_integer,qnum=question_number,button='submit')
-        else:
-            return render_template('quiz.html',gather=json_data,index=unique_random_integer,qnum=question_number,button='next')
+        numb += 1
+        return render_template('quiz.html',gather=json_data,index=not_showed[numb],qnum=question_number,button='buzz')
     else:
         print(f'{len(showed)} end')
         showed = []
         question_number = 1
-        collection.update_one({'username':username},{'$set':{'quiz-score':score}})
+        collection.update_one({'username':username},{'$set':{'used-time':used_time}})
         unique_random_integer = 0
         score = 0
         

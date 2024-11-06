@@ -21,21 +21,17 @@
                 <div id="answers">
                     {% for answer in gather[index]['options'] %}
                     <label class="label-box">
-                        <div class="">
+                        <div>
                             <input type="radio" id="option_{{ loop.index }}" name="q{{ index }}" value="{{ answer }}" class="radio">
                             <span class="custom-label" id="opinion_{{ loop.index }}">{{ answer }}</span>
                         </div>
                     </label><br>
-                    <input type="text" name="beach" id="timed" value="damn">
-
                     {% endfor %}
-                    <div class="answer" id="banswer">{{gather[index]['answer']}}</div> 
                 </div>        
         </form>
             </div>
         <div class="buzz-button" id="buzzButton">Buzz</div>
     </div>
-    <div id="selected"></div>
     <canvas id="canvas"></canvas>
 
     <script src="{{ url_for('static', filename='js/script3.js') }}"></script>

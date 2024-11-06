@@ -4,11 +4,14 @@ let countdownInterval;
 let timeLeft = 10;
 let solution = 0;
 
+
 function updateTimerDisplay(remainingTime) {
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
     document.getElementById('timer').innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
+
+
 
 function updateTimerDisplay2(remainingTime) {
     const minutes = Math.floor(remainingTime / 60);
@@ -18,7 +21,7 @@ function updateTimerDisplay2(remainingTime) {
 
 let timerInterval;
 let remainingTime;
-let getted = 0;
+let answered = false;
 
 function startTimer() {
     document.getElementById('timer').classList.remove('hidden');
@@ -39,10 +42,8 @@ function startTimer() {
 }
 
 document.getElementById('buzzButton').addEventListener('click', () => {
-    setTimeout(() => {
-        document.getElementById('buzzButton').classList.add('touchability');
-    }, 50);
     document.getElementById('answers').classList.remove('hidden');
+    document.getElementById('buzzButton').classList.add('touchability');
     clearInterval(timerInterval);
     document.getElementById('timer').classList.add('hidden');
     document.getElementById('countdown').classList.remove('hidden');
@@ -56,30 +57,107 @@ document.getElementById('buzzButton').addEventListener('click', () => {
 
         if (remainingTime2 <= 0) {
             clearInterval(countdownInterval);
-            document.getElementById('answers').classList.add('touchability');
-            document.getElementById('newButton').click();
-        }
+
+
+            
+            if (remainingTime > 0){
+                let more = remainingTime;
+                timerInterval = setInterval(() => {
+                    updateTimerDisplay(remainingTime);
+            
+                    if (remainingTime <= 0 || answered == true) {
+                        clearInterval(remainingTime);
+                        answered = false;
+                        document.getElementById('newButton').click();
+                    }
+                }, 1000);
+
+
+
+
+
+            }else{
+                document.getElementById('newButton').click();
+            };
+            
+        };
     }, 1000);
 });
 
-let answers = document.getElementById('answers');
-answers.addEventListener('click', () => {
-    setTimeout(() => {
-        document.getElementById('answers').classList.add('touchability');
-    }, 50);
+let answers = document.getElementsByTagName('span');
+for (let i = 0; i < answers.length; i++) {
+    
+    answers[i].addEventListener('click', () => {
+        setTimeout(() => {
+            document.getElementById('answers').classList.add('touchability');
+            answered = true;
+        }, 50);
+    });
+    
+
+
+}
+
+document.getElementById('buzzButton').addEventListener('click', () => {
+    fetch('/buzz', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'locked') {
+                startBuzzerTimer();
+            }
+        });
 });
 
-for (let ix = 1; ix < 5; ix++) {
-    document.getElementById(`option_${ix}`).addEventListener('click', () => {
-        document.getElementById('selected').innerHTML = document.getElementById(`opinion_${ix}`).textContent;
-    });
+function startBuzzerTimer() {
+    let buzzerTimeLeft = 10;
+    buzzerTimer = setInterval(() => {
+        buzzerTimeLeft--;
+        updateBuzzerTimerDisplay(buzzerTimeLeft);
+
+        if (buzzerTimeLeft <= 0) {
+            clearInterval(buzzerTimer);
+            resetMainTimer(); // If the buzzer time ends, reset the main timer for all players
+        }
+    }, 1000);
 }
 
-if (document.getElementById('selected').textContent === document.getElementById('banswer').textContent) {
-    console.log(document.getElementById('timed'));
-    console.log(remainingTime);
-    document.getElementById('timed').value = remainingTime;
+
+function updateBuzzerTimerDisplay(timeLeft) {
+    // Update buzzer timer display logic here
+    console.log("Remaining Buzzer Time:", timeLeft);
 }
+
+
+function resetMainTimer() {
+    fetch('/reset_timer', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'reset') {
+                startTimer(); // Restart the main timer for all players
+                unlockQuizForAll();
+            }
+        });
+}
+
+
+function unlockQuizForAll() {
+    fetch('/check_lock')
+        .then(response => response.json())
+        .then(data => {
+            if (data.locked) {
+                // Unlock the quiz for all players
+                document.querySelectorAll('input[type=radio]').forEach(input => {
+                    input.disabled = false;
+                });
+                buzzButton.disabled = false;
+            }
+        });
+}
+
+
+
+
+
 
 window.onload = startTimer;
 

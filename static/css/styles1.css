@@ -664,3 +664,8 @@ body {
 #timed {
   visibility:hidden;
 }
+
+.locked {
+  pointer-events: none;
+  opacity: 0.5;
+}

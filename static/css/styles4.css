@@ -145,3 +145,8 @@ body {
         transform: translateY(0);
     }
 }
+
+.diss {
+    opacity: 0.5;
+    pointer-events: none;
+}

@@ -42,6 +42,62 @@ function startTimer() {
 }
 
 
+function lock_all(){
+    document.getElementById('answers').classList.remove('hidden');
+    document.getElementById('buzzButton').classList.add('touchability');
+    clearInterval(timerInterval);
+    document.getElementById('timer').classList.add('hidden');
+    document.getElementById('countdown').classList.remove('hidden');
+
+    let remainingTime2 = 10;
+    updateTimerDisplay2(remainingTime2);
+
+    countdownInterval = setInterval(() => {
+        remainingTime2--;
+        updateTimerDisplay2(remainingTime2);
+
+        if (remainingTime2 <= 0) {
+
+
+            fetch('/answer', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                });
+
+
+
+            clearInterval(countdownInterval);
+
+
+            
+            if (remainingTime > 0 && answered == false){
+                let more = remainingTime;
+                timerInterval = setInterval(() => {
+                    updateTimerDisplay(remainingTime);
+            
+                    if (remainingTime <= 0 || answered == true) {
+                        clearInterval(remainingTime);
+                        answered = false;
+                        document.getElementById('newButton').click();
+                    }
+                }, 1000);
+
+
+
+
+
+            }else{
+                document.getElementById('newButton').click();
+            };
+            
+        };
+    }, 1000); 
+
+};
+
+
+
 
 document.getElementById('buzzButton').addEventListener('click', () => {
     document.getElementById('answers').classList.remove('hidden');
@@ -182,7 +238,33 @@ function unlockQuizForAll() {
                 buzzButton.disabled = false;
             }
         });
+};
+
+
+
+
+
+
+function checkLockStatus() {
+    fetch('/check_update')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === true) {
+                console.log("Lock status: locked");
+                startTimer();
+
+            } else {
+                console.log("Lock status: unlocked");
+                lock_all();
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
+
+// Call the checkLockStatus function every 1 second (1000 milliseconds)
+setInterval(checkLockStatus, 1000);
+
+
 
 
 

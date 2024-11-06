@@ -16,6 +16,7 @@
                 var notification = document.getElementById('notification');
                 notification.style.display = 'none';
                 }
+                document.getElementById('round2').classList.add('diss')
             </script>
         </div>
     {% endif %}
@@ -28,13 +29,13 @@
 
         
 
-        <div class="card">
+        <div class="card" id="round2">
             <h2 class="damn"><center>Quiz competition</center></h2>
             <img src="{{ url_for('static', filename='images/image_processing20200225-18103-o71767.gif') }}" alt="Event 3">
             <div class="card-content">
                 
                 <p><center>In this challenge,you can prove your knowledge in Biology,chemistry,mathematics and IT to the all participants.</center></p>
-                <center><a href="/quiz" class="btn">Start</a></center>
+                <center><a href="/join_quiz" class="btn">Start</a></center>
             </div>
         </div>
 

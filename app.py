@@ -12,6 +12,7 @@ client = MongoClient('mongodb+srv://chamindusenehas:Chamee.19721@techverse.msx3f
 db = client['quiz']
 collection = db['students']
 collection2 = db['locking']
+collection3 = db['players']
 
 
 
@@ -79,6 +80,7 @@ def submit():
 
 @app.route('/submit',methods=['GET'])
 def submitt():
+    collection3.delete_many({})
     return render_template('main.html',text='yes')
 
 question_number = 1
@@ -146,6 +148,62 @@ def reset_timer():
 def get_timer_status():
     main_timer_status = collection.find_one({'name': 'main_timer'}).get('status', False)
     return jsonify({'status': main_timer_status})
+
+
+@app.route('/check_update', methods=['GET'])
+def check_update():
+    # Retrieve the document with the field you want to monitor
+    lock_status = collection2.find_one({'name': 'lock'})
+    print(lock_status['status'])
+    if lock_status:
+        # Return the status to the client
+        return jsonify({'status': lock_status['status']})
+    else:
+        return jsonify({'status': None})
+
+@app.route('/join_quiz', methods=['GET'])
+def join_quiz():
+    collection3.update_one(
+        {'username': username},
+        {'$set': {'ready': True}},
+        upsert=True
+    )
+    return render_template('waiting.html') 
+
+@app.route('/join_quizzee', methods=['GET'])
+def checker():
+    num = collection3.count_documents({'ready': True})
+    if num >= 2:
+        return jsonify({'start_quiz': True}) 
+    else:
+        return jsonify({'start_quiz': False})
+
+
+  
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -220,8 +278,13 @@ def quizz():
     else:
         # End the quiz and submit answers
         reset_quiz_state()
-        return redirect(url_for('submit'))
 
+        return redirect(url_for('submit'))
+    
+
+
+
+    
 def reset_quiz_state():
     # Reset the quiz state for the next attempt
     global showed, question_number, unique_random_integer, score, not_showed
@@ -234,6 +297,14 @@ def reset_quiz_state():
 def generate_question_order():
     # Logic for generating a shuffled list of question indices (not_showed)
     return list(range(len(load_json('data/questions.json'))))  # Replace with actual logic to create question order
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

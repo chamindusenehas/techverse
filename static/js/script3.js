@@ -41,6 +41,8 @@ function startTimer() {
     }, 1000);
 }
 
+
+
 document.getElementById('buzzButton').addEventListener('click', () => {
     document.getElementById('answers').classList.remove('hidden');
     document.getElementById('buzzButton').classList.add('touchability');
@@ -56,11 +58,21 @@ document.getElementById('buzzButton').addEventListener('click', () => {
         updateTimerDisplay2(remainingTime2);
 
         if (remainingTime2 <= 0) {
+
+
+            fetch('/answer', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                });
+
+
+
             clearInterval(countdownInterval);
 
 
             
-            if (remainingTime > 0){
+            if (remainingTime > 0 && answered == false){
                 let more = remainingTime;
                 timerInterval = setInterval(() => {
                     updateTimerDisplay(remainingTime);
@@ -107,6 +119,24 @@ document.getElementById('buzzButton').addEventListener('click', () => {
             }
         });
 });
+
+
+document.getElementById('newButton').addEventListener('click', () => {
+    fetch('/answer', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        });
+});
+
+
+
+
+
+
+
+
+
 
 function startBuzzerTimer() {
     let buzzerTimeLeft = 10;

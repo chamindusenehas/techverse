@@ -245,24 +245,24 @@ function unlockQuizForAll() {
 
 
 
-function checkLockStatus() {
-    fetch('/check_update')
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === true) {
-                console.log("Lock status: locked");
-                startTimer();
+// function checkLockStatus() {
+//     fetch('/check_update')
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.status === true) {
+//                 console.log("Lock status: locked");
+//                 startTimer();
 
-            } else {
-                console.log("Lock status: unlocked");
-                lock_all();
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
+//             } else {
+//                 console.log("Lock status: unlocked");
+//                 lock_all();
+//             }
+//         })
+//         .catch(error => console.error('Error:', error));
+// }
 
-// Call the checkLockStatus function every 1 second (1000 milliseconds)
-setInterval(checkLockStatus, 1000);
+// // Call the checkLockStatus function every 1 second (1000 milliseconds)
+// setInterval(checkLockStatus, 1000);
 
 
 

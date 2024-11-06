@@ -109,41 +109,24 @@ buzzer_timer_running = False
 
 @app.route('/buzz', methods=['POST'])
 def buzz():
-    collection2.update_one(
-        {'name': 'lock'},  # Filter for the 'lock' document
-        {'$set': {'status': True}},  # Set the status to True (locked)
-        upsert=True  # Create the document if it doesn't exist
-    )
+    collection2.update_one({'name': 'lock'}, {'$set': {'status': True}}, upsert=True)
     return jsonify({'status': 'locked'})
-
 
 @app.route('/answer', methods=['POST'])
 def answer():
-    # Answer was provided within 10 seconds, reset buzzer timer and unlock
-    global buzzer_timer_running
-    buzzer_timer_running = False
-    
-    # Unlock the quiz for everyone else to buzz again
-    collection2.update_one(
-        {'name': 'lock'},  # Filter for the 'lock' document
-        {'$set': {'status': False}},  # Set the status to False (unlocked)
-        upsert=True  # Create the document if it doesn't exist
-    )
-    
-    return jsonify({'status':'unlocked'})
+    # Unlock when answer is submitted
+    collection2.update_one({'name': 'lock'}, {'$set': {'status': False}}, upsert=True)
+    return jsonify({'status': 'unlocked'})
 
 @app.route('/check_lock', methods=['GET'])
 def check_lock():
-    # Retrieve the lock status from the 'locking' collection
-    lock_status = collection2.find_one({'name': 'lock'}).get('status', False)
-    return jsonify({'locked': lock_status})
+    lock_status = collection2.find_one({'name': 'lock'}) or {}
+    return jsonify({'locked': lock_status.get('status', False)})
 
 @app.route('/reset_timer', methods=['POST'])
 def reset_timer():
-    # Reset all players' main timers after the buzzer timeout
-    collection.update_one({'name': 'main_timer'}, {'$set': {'status': True}}, upsert=True)
+    collection2.update_one({'name': 'lock'}, {'$set': {'status': False}})
     return jsonify({'status': 'reset'})
-
 @app.route('/get_timer_status', methods=['GET'])
 def get_timer_status():
     main_timer_status = collection.find_one({'name': 'main_timer'}).get('status', False)

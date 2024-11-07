@@ -111,33 +111,32 @@ document.getElementById('buzzButton').addEventListener('click', () => {
         .then(data => {
             lockedin = data.status;
         });
-    if (lockedin == false) {
-        resumeTimer();
-    }else{
-        pauseTimer();
-        startBuzzerTimer(); 
-    }
 });
 
 
 
 
-setInterval(() => {
-    fetch('/check_lock')
-        .then(response => response.json())
-        .then(data => {
-            lockedin = data.locked
-
-            if (data.locked == false) {
-                unlockVotingForAll();
-            }else{
-                if (damnit != true){
-                    lockVotingForAll();
-                } 
-            }
-        });
-}, 1000);
-
+function timer(){
+    setInterval(() => {
+        fetch('/check_lock')
+            .then(response => response.json())
+            .then(data => {
+                lockedin = data.locked;
+    
+                if (data.locked == false) {
+                    unlockVotingForAll();
+                    resumeTimer();
+                }else{
+                    pauseTimer();
+                    startBuzzerTimer();
+                    if (damnit != true){
+                        lockVotingForAll(); 
+                    }
+                }
+            });
+    }, 1000);
+    
+};
 
 
 

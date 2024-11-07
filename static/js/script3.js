@@ -116,7 +116,6 @@ document.getElementById('buzzButton').addEventListener('click', () => {
 
 
 
-function timer(){
     setInterval(() => {
         fetch('/check_lock')
             .then(response => response.json())
@@ -129,6 +128,7 @@ function timer(){
                 }else{
                     pauseTimer();
                     startBuzzerTimer();
+                    print(damnit)
                     if (damnit != true){
                         lockVotingForAll(); 
                     }
@@ -136,7 +136,7 @@ function timer(){
             });
     }, 1000);
     
-};
+
 
 
 

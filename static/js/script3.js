@@ -1,4 +1,6 @@
-const timeLimitInSeconds = 30;
+function start(){
+    document.getAnimations('boody').classList.remove('boody');
+    const timeLimitInSeconds = 30;
 let countdownDisplay = document.getElementById("countdown");
 let countdownInterval;
 let timeLeft = timeLimitInSeconds;
@@ -8,6 +10,10 @@ let mainTimerInterval;
 let remainingTime = timeLimitInSeconds;
 let answered = false;
 let buzzerTimerInterval;
+document.getElementById('timer').classList.remove('hidden');
+document.getElementById('countdown').classList.add('hidden');
+document.getElementById('answers').classList.add('hidden');
+
 
 
 function updateTimerDisplay(remainingTime) {
@@ -21,7 +27,6 @@ function startTimer() {
     document.getElementById('timer').classList.remove('hidden');
     document.getElementById('countdown').classList.add('hidden');
     document.getElementById('answers').classList.add('hidden');
-    document.getElementById('buzzButton').classList.add('touchability');
     let loaded = false;
     
 
@@ -182,6 +187,7 @@ document.getElementById('newButton').addEventListener('click', () => {
         });
 });
 
+};
 
 function load(){
     fetch('/loaded')
@@ -189,6 +195,18 @@ function load(){
         .then(data => {
             console.log(data)
         })
+}
+
+function load(){
+    setInterval(()=>{
+        etch('/okdone')
+        .then(response => response.json())
+        .then(data => {
+            alert(data)
+            start();
+        })
+    },100);
+    
 }
 
 
@@ -199,7 +217,6 @@ function load(){
 
 
 window.onload = load;
-window.onload = startTimer;
 
 
 

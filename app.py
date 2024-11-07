@@ -175,6 +175,7 @@ def load():
         {'$set': {'loaded': True}},
         upsert=True
     )
+    
     return jsonify({'loaded':True})
 
 

@@ -23,15 +23,7 @@ function startTimer() {
     document.getElementById('answers').classList.add('hidden');
     document.getElementById('buzzButton').classList.add('touchability');
     let loaded = false;
-    while (loaded == false){
-        fetch('/okdone')
-        .then(response => response.json())
-        .then(data => {
-            if (data.loaded == true){
-                loaded = true;
-            }
-        })
-    }
+    
 
     
     updateTimerDisplay(remainingTime);

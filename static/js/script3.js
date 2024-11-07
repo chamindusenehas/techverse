@@ -21,6 +21,18 @@ function startTimer() {
     document.getElementById('timer').classList.remove('hidden');
     document.getElementById('countdown').classList.add('hidden');
     document.getElementById('answers').classList.add('hidden');
+    document.getElementById('buzzButton').classList.add('touchability');
+    let loaded = false;
+    while (loaded == false){
+        fetch('/okdone')
+        .then(response => response.json())
+        .then(data => {
+            if (data.loaded == true){
+                loaded = true;
+            }
+        })
+    }
+
     
     updateTimerDisplay(remainingTime);
     mainTimerInterval = setInterval(() => {
@@ -179,6 +191,13 @@ document.getElementById('newButton').addEventListener('click', () => {
 });
 
 
+function load(){
+    fetch('/loaded')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+}
 
 
 
@@ -187,9 +206,7 @@ document.getElementById('newButton').addEventListener('click', () => {
 
 
 
-
-
-
+window.onload = load;
 window.onload = startTimer;
 
 

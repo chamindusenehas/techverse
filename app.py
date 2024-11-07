@@ -116,6 +116,11 @@ def buzz():
 def answer():
 
     collection2.update_one({'name': 'lock'}, {'$set': {'status': False}}, upsert=True)
+    collection3.update_one(
+        {'username': username},
+        {'$set': {'ready': False}},
+        upsert=True
+    )
     return jsonify({'status': 'unlocked'})
 
 @app.route('/check_lock', methods=['GET'])
@@ -161,6 +166,26 @@ def checker():
         return jsonify({'start_quiz': True}) 
     else:
         return jsonify({'start_quiz': False})
+    
+
+@app.route('/loaded')
+def load():
+    collection3.update_one(
+        {'username': username},
+        {'$set': {'loaded': True}},
+        upsert=True
+    )
+    return jsonify({'loaded':True})
+
+
+@app.route('/okdone')
+def ok():
+    num2 = collection3.count_documents({'loaded': True})
+    if num2 >= 2:
+        return jsonify({'loaded': True}) 
+    else:
+        return jsonify({'loaded': False})
+    
 
 
   

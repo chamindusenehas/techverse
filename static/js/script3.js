@@ -1,5 +1,4 @@
-function start(){
-    document.getAnimations('boody').classList.remove('boody');
+
     const timeLimitInSeconds = 30;
 let countdownDisplay = document.getElementById("countdown");
 let countdownInterval;
@@ -136,8 +135,7 @@ setInterval(() => {
         .then(data => {
             let lockedin = data.locked;
 
-            if (lockedin === false && lastLockedState !== false) {
-               
+            if (lockedin === false && lastLockedState !== false) {   
                 unlockVotingForAll();
                 resumeTimer();
             } 
@@ -153,7 +151,7 @@ setInterval(() => {
            
             lastLockedState = lockedin;
         });
-}, 1000);
+}, 50);
 
     
 
@@ -186,37 +184,6 @@ document.getElementById('newButton').addEventListener('click', () => {
             console.log(data)
         });
 });
-
-};
-
-function load(){
-    fetch('/loaded')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
-}
-
-function load(){
-    setInterval(()=>{
-        etch('/okdone')
-        .then(response => response.json())
-        .then(data => {
-            alert(data)
-            start();
-        })
-    },100);
-    
-}
-
-
-
-
-
-
-
-
-window.onload = load;
 
 
 

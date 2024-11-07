@@ -143,7 +143,6 @@ def get_timer_status():
 def check_update():
 
     lock_status = collection2.find_one({'name': 'lock'})
-    print(lock_status['status'])
     if lock_status:
 
         return jsonify({'status': lock_status['status']})
@@ -168,25 +167,7 @@ def checker():
         return jsonify({'start_quiz': False})
     
 
-@app.route('/loaded')
-def load():
-    collection3.update_one(
-        {'username': username},
-        {'$set': {'loaded': True}},
-        upsert=True
-    )
-    
-    return jsonify({'loaded':True})
-
-
-@app.route('/okdone')
-def ok():
-    num2 = collection3.count_documents({'loaded': True})
-    if num2 >= 2:
-        return jsonify({'loaded': True}) 
-    else:
-        return jsonify({'loaded': False})
-    
+ 
 
 @app.route('/subject')
 def subject():

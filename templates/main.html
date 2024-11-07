@@ -21,23 +21,39 @@
         </div>
     {% endif %}
     <div class="header">
-        <h1>Events</h1>
+        <h1>Final Battle</h1>
     </div>
 
     <div class="cards-container">
         
 
-        
 
-        <div class="card" id="round2">
-            <h2 class="damn"><center>Quiz competition</center></h2>
-            <img src="{{ url_for('static', filename='images/image_processing20200225-18103-o71767.gif') }}" alt="Event 3">
+
+        <div class="card" id="round1">
+            <h2 class="damn"><center>Round 1</center></h2>
+            <center><img src="{{ url_for('static', filename='images/Intro-HELLO-FUTURE-1920x1080_v2.gif') }}" alt="Event 1"></center>
             <div class="card-content">
                 
                 <p><center>In this challenge,you can prove your knowledge in Biology,chemistry,mathematics and IT to the all participants.</center></p>
-                <center><a href="/join_quiz" class="btn">Start</a></center>
+                <center><a href="/subject" class="btn">Start</a></center>
             </div>
         </div>
+
+
+        
+
+        <div class="card" id="round2">
+            <h2 class="damn"><center>Round 2</center></h2>
+            <center><img src="{{ url_for('static', filename='images/image_processing20200225-18103-o71767.gif') }}" alt="Event 2"></center>
+            <div class="card-content">
+                
+                <p><center>In this challenge,you can prove your knowledge in Biology,chemistry,mathematics and IT to the all participants.</center></p>
+                <center><a href="/join_quiz" class="btn2">Start</a></center>
+            </div>
+        </div>
+
+
+        <script src="{{ url_for('static', filename='js/script5.js') }}"></script>
 
         
     </div>

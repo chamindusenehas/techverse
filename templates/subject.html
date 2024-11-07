@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Cards</title>
+  <style>
+ 
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    
+   
+    body {
+      background-color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+        
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        width: 90vw;
+        height: 90vh;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+        border-radius: 20px;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      color: #e0e0e0;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .card img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      background-blend-mode: overlay;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" onclick="enterSubject('Biology')"><img src="{{ url_for('static', filename='images/DNA-Genetics.webp') }}"><br>Biology</div>
+    <div class="card" onclick="enterSubject('Mathematics')"><img src="{{ url_for('static', filename='images/fItrOO.gif') }}"><br>Mathematics</div>
+    <div class="card" onclick="enterSubject('Physics')"><img src="{{ url_for('static', filename='images/200w.gif') }}"><br>Physics</div>
+    <div class="card" onclick="enterSubject('Chemistry')"><img src="{{ url_for('static', filename='images/chemistry-chemist-at-work-2018.gif') }}"><br>Chemistry</div>
+  </div>
+
+  <script>
+    
+
+
+
+    function enterSubject(subject) {
+      sendDataToServer(subject);
+
+    }
+  </script>
+</body>
+</html>

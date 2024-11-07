@@ -40,25 +40,23 @@ body {
 .card {
     background-color: #1f1f1f;
     border-radius: 10px;
+    width: 500px;
+    height: 600px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    width: 600px;
-    height: 600px;
     transform: scale(1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .card:hover {
     transform: scale(1.05);
+    background-color: #423434 ;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .card img {
-    padding-top: 10px;
-    padding-left: 90px;
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
+    width: 80%;
+    height:270px;
 }
 
 .damn {
@@ -75,6 +73,7 @@ body {
 }
 
 .card-content p {
+    padding-bottom: 30px;
     margin: 0;
     font-size: 1rem;
 }
@@ -83,13 +82,28 @@ body {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
+    width: 80%;
     background-color: #007bff;
     color: #ffffff;
     text-align: center;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 20px;
     transition: background-color 0.3s ease;
 }
+
+.card-content .btn2 {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    width: 80%;
+    background-color: #007bff;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
 
 .card-content .btn:hover {
     background-color: #0056b3;
@@ -150,3 +164,8 @@ body {
     opacity: 0.5;
     pointer-events: none;
 }
+
+/* .touchability {
+    filter: brightness(0.5);
+    pointer-events: none;
+} */

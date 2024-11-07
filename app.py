@@ -187,8 +187,11 @@ def ok():
         return jsonify({'loaded': False})
     
 
+@app.route('/subject')
+def subject():
+    return render_template('subject.html')
 
-  
+
 
     
 
@@ -305,7 +308,9 @@ def reset_quiz_state():
 
 def generate_question_order():
    
-    return list(range(len(load_json('data/questions.json'))))  
+    return list(range(len(load_json('data/questions.json'))))
+
+
 
 
 

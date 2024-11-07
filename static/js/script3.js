@@ -21,13 +21,7 @@ function startTimer() {
     document.getElementById('timer').classList.remove('hidden');
     document.getElementById('countdown').classList.add('hidden');
     document.getElementById('answers').classList.add('hidden');
-    fetch('/answer')
-        .then(response => response.json())
-        .then(data => {
-            if (data.locked == false) {
-                unlockVotingForAll();
-            }
-        });
+    
     updateTimerDisplay(remainingTime);
     mainTimerInterval = setInterval(() => {
         remainingTime--;
@@ -47,6 +41,13 @@ function pauseTimer() {
 
 function resumeTimer() {
     startTimer();
+    fetch('/answer')
+        .then(response => response.json())
+        .then(data => {
+            if (data.locked == false) {
+                unlockVotingForAll();
+            }
+        });
 }
 
 
@@ -115,26 +116,36 @@ document.getElementById('buzzButton').addEventListener('click', () => {
 
 
 
-
-    setInterval(() => {
-        fetch('/check_lock')
-            .then(response => response.json())
-            .then(data => {
-                lockedin = data.locked;
     
-                if (data.locked == false) {
-                    unlockVotingForAll();
-                    resumeTimer();
-                }else{
-                    pauseTimer();
-                    startBuzzerTimer();
-                    print(damnit)
-                    if (damnit != true){
-                        lockVotingForAll(); 
-                    }
+
+let lastLockedState = null;
+
+
+setInterval(() => {
+    fetch('/check_lock')
+        .then(response => response.json())
+        .then(data => {
+            let lockedin = data.locked;
+
+            if (lockedin === false && lastLockedState !== false) {
+               
+                unlockVotingForAll();
+                resumeTimer();
+            } 
+            else if (lockedin === true && lastLockedState !== true) {
+                
+                pauseTimer();
+                startBuzzerTimer();
+                if (damnit !== true) {
+                    lockVotingForAll();
                 }
-            });
-    }, 1000);
+            }
+
+           
+            lastLockedState = lockedin;
+        });
+}, 1000);
+
     
 
 
@@ -180,6 +191,7 @@ document.getElementById('newButton').addEventListener('click', () => {
 
 
 window.onload = startTimer;
+
 
 
 

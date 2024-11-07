@@ -1,8 +1,13 @@
 const timeLimitInSeconds = 30;
 let countdownDisplay = document.getElementById("countdown");
 let countdownInterval;
-let timeLeft = 10;
+let timeLeft = timeLimitInSeconds;
 let solution = 0;
+
+let mainTimerInterval;
+let remainingTime = timeLimitInSeconds;
+let answered = false;
+let buzzerTimerInterval;
 
 
 function updateTimerDisplay(remainingTime) {
@@ -12,145 +17,133 @@ function updateTimerDisplay(remainingTime) {
 }
 
 
-
-function updateTimerDisplay2(remainingTime) {
-    const minutes = Math.floor(remainingTime / 60);
-    const seconds = remainingTime % 60;
-    document.getElementById('countdown').innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
-
-let timerInterval;
-let remainingTime;
-let answered = false;
-
 function startTimer() {
     document.getElementById('timer').classList.remove('hidden');
     document.getElementById('countdown').classList.add('hidden');
     document.getElementById('answers').classList.add('hidden');
-    remainingTime = timeLimitInSeconds;
+    fetch('/answer')
+        .then(response => response.json())
+        .then(data => {
+            if (data.locked == false) {
+                unlockVotingForAll();
+            }
+        });
     updateTimerDisplay(remainingTime);
-
-    timerInterval = setInterval(() => {
-        remainingTime -= 1;
+    mainTimerInterval = setInterval(() => {
+        remainingTime--;
         updateTimerDisplay(remainingTime);
 
         if (remainingTime <= 0) {
-            clearInterval(timerInterval);
+            clearInterval(mainTimerInterval);
             document.getElementById('newButton').click();
         }
     }, 1000);
 }
 
 
-function lock_all(){
-    document.getElementById('answers').classList.remove('hidden');
-    document.getElementById('buzzButton').classList.add('touchability');
-    clearInterval(timerInterval);
+function pauseTimer() {
+    clearInterval(mainTimerInterval);
+}
+
+function resumeTimer() {
+    startTimer();
+}
+
+
+function startBuzzerTimer() {
+    let buzzerTimeLeft = 10;
     document.getElementById('timer').classList.add('hidden');
     document.getElementById('countdown').classList.remove('hidden');
+    
+    updateBuzzerTimerDisplay(buzzerTimeLeft);
 
-    let remainingTime2 = 10;
-    updateTimerDisplay2(remainingTime2);
+    buzzerTimerInterval = setInterval(() => {
+        buzzerTimeLeft--;
+        updateBuzzerTimerDisplay(buzzerTimeLeft);
 
-    countdownInterval = setInterval(() => {
-        remainingTime2--;
-        updateTimerDisplay2(remainingTime2);
-
-        if (remainingTime2 <= 0) {
-
-
-            fetch('/answer', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                });
-
-
-
-            clearInterval(countdownInterval);
-
-
+        if (buzzerTimeLeft <= 0) {
             
-            if (remainingTime > 0 && answered == false){
-                let more = remainingTime;
-                timerInterval = setInterval(() => {
-                    updateTimerDisplay(remainingTime);
-            
-                    if (remainingTime <= 0 || answered == true) {
-                        clearInterval(remainingTime);
-                        answered = false;
-                        document.getElementById('newButton').click();
-                    }
-                }, 1000);
-
-
-
-
-
+            if (answered == true){
+                document.getElementById('newButton').click()
             }else{
-                document.getElementById('newButton').click();
+                clearInterval(buzzerTimerInterval);
+                resumeTimer();
+                unlockVotingForAll();
             };
-            
-        };
-    }, 1000); 
+        }
+    }, 1000);
+}
 
-};
+function updateBuzzerTimerDisplay(timeLeft) {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('countdown').innerText = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    console.log("Remaining Buzzer Time:", timeLeft);
+}
+
+
+function lockVotingForAll() {
+    document.getElementById('answers').classList.add('touchability');
+    document.getElementById('buzzButton').classList.add('touchability');
+}
 
 
 
+function unlockVotingForAll() {
+    document.getElementById('answers').classList.remove('touchability');
+    document.getElementById('buzzButton').classList.remove('touchability');
+
+}
+let damnit = false;
+let lockedin = 'unlocked';
 
 document.getElementById('buzzButton').addEventListener('click', () => {
-    document.getElementById('answers').classList.remove('hidden');
+    damnit = true;
     document.getElementById('buzzButton').classList.add('touchability');
-    clearInterval(timerInterval);
-    document.getElementById('timer').classList.add('hidden');
-    document.getElementById('countdown').classList.remove('hidden');
-
-    let remainingTime2 = 10;
-    updateTimerDisplay2(remainingTime2);
-
-    countdownInterval = setInterval(() => {
-        remainingTime2--;
-        updateTimerDisplay2(remainingTime2);
-
-        if (remainingTime2 <= 0) {
-
-
-            fetch('/answer', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                });
-
-
-
-            clearInterval(countdownInterval);
-
-
-            
-            if (remainingTime > 0 && answered == false){
-                let more = remainingTime;
-                timerInterval = setInterval(() => {
-                    updateTimerDisplay(remainingTime);
-            
-                    if (remainingTime <= 0 || answered == true) {
-                        clearInterval(remainingTime);
-                        answered = false;
-                        document.getElementById('newButton').click();
-                    }
-                }, 1000);
-
-
-
-
-
-            }else{
-                document.getElementById('newButton').click();
-            };
-            
-        };
-    }, 1000);
+    document.getElementById('answers').classList.remove('hidden');
+    fetch('/buzz', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.status);
+        });
+        fetch('/check_update', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            lockedin = data.status;
+        });
+    if (lockedin == false) {
+        resumeTimer();
+    }else{
+        pauseTimer();
+        startBuzzerTimer(); 
+    }
 });
+
+
+
+
+setInterval(() => {
+    fetch('/check_lock')
+        .then(response => response.json())
+        .then(data => {
+            lockedin = data.locked
+
+            if (data.locked == false) {
+                unlockVotingForAll();
+            }else{
+                if (damnit != true){
+                    lockVotingForAll();
+                } 
+            }
+        });
+}, 1000);
+
+
+
+
+
+
+
 
 let answers = document.getElementsByTagName('span');
 for (let i = 0; i < answers.length; i++) {
@@ -166,16 +159,6 @@ for (let i = 0; i < answers.length; i++) {
 
 }
 
-document.getElementById('buzzButton').addEventListener('click', () => {
-    fetch('/buzz', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'locked') {
-                startBuzzerTimer();
-            }
-        });
-});
-
 
 document.getElementById('newButton').addEventListener('click', () => {
     fetch('/answer', { method: 'POST' })
@@ -189,80 +172,6 @@ document.getElementById('newButton').addEventListener('click', () => {
 
 
 
-
-
-
-
-
-function startBuzzerTimer() {
-    let buzzerTimeLeft = 10;
-    buzzerTimer = setInterval(() => {
-        buzzerTimeLeft--;
-        updateBuzzerTimerDisplay(buzzerTimeLeft);
-
-        if (buzzerTimeLeft <= 0) {
-            clearInterval(buzzerTimer);
-            resetMainTimer(); // If the buzzer time ends, reset the main timer for all players
-        }
-    }, 1000);
-}
-
-
-function updateBuzzerTimerDisplay(timeLeft) {
-    // Update buzzer timer display logic here
-    console.log("Remaining Buzzer Time:", timeLeft);
-}
-
-
-function resetMainTimer() {
-    fetch('/reset_timer', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'reset') {
-                startTimer(); // Restart the main timer for all players
-                unlockQuizForAll();
-            }
-        });
-}
-
-
-function unlockQuizForAll() {
-    fetch('/check_lock')
-        .then(response => response.json())
-        .then(data => {
-            if (data.locked) {
-                // Unlock the quiz for all players
-                document.querySelectorAll('input[type=radio]').forEach(input => {
-                    input.disabled = false;
-                });
-                buzzButton.disabled = false;
-            }
-        });
-};
-
-
-
-
-
-
-// function checkLockStatus() {
-//     fetch('/check_update')
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.status === true) {
-//                 console.log("Lock status: locked");
-//                 startTimer();
-
-//             } else {
-//                 console.log("Lock status: unlocked");
-//                 lock_all();
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// }
-
-// // Call the checkLockStatus function every 1 second (1000 milliseconds)
-// setInterval(checkLockStatus, 1000);
 
 
 

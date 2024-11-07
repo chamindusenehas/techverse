@@ -114,14 +114,15 @@ def buzz():
 
 @app.route('/answer', methods=['POST'])
 def answer():
-    # Unlock when answer is submitted
+
     collection2.update_one({'name': 'lock'}, {'$set': {'status': False}}, upsert=True)
     return jsonify({'status': 'unlocked'})
 
 @app.route('/check_lock', methods=['GET'])
 def check_lock():
-    lock_status = collection2.find_one({'name': 'lock'}) or {}
-    return jsonify({'locked': lock_status.get('status', False)})
+    lock_status = collection2.find_one({'name': 'lock'})
+    print(lock_status['status'])
+    return jsonify({'locked': lock_status['status']})
 
 @app.route('/reset_timer', methods=['POST'])
 def reset_timer():
@@ -135,11 +136,11 @@ def get_timer_status():
 
 @app.route('/check_update', methods=['GET'])
 def check_update():
-    # Retrieve the document with the field you want to monitor
+
     lock_status = collection2.find_one({'name': 'lock'})
     print(lock_status['status'])
     if lock_status:
-        # Return the status to the client
+
         return jsonify({'status': lock_status['status']})
     else:
         return jsonify({'status': None})
@@ -207,59 +208,59 @@ def quizz():
     global not_showed
     global used_time
 
-    # Load questions data from JSON
+
     json_data = load_json('data/questions.json')
 
 
 
-    selected_answer = request.form.get(f'q{not_showed[0]}')  # Retrieves answer for the current question index
+    selected_answer = request.form.get(f'q{not_showed[0]}')
     print(selected_answer)
     print(json_data[not_showed[0]]['answer'])
 
 
 
-    # Ensure the answer is available and compare with correct answer
+ 
     if selected_answer:
-        correct_answer = json_data[not_showed[0]]['answer']  # Get the correct answer from the JSON
+        correct_answer = json_data[not_showed[0]]['answer'] 
 
 
-        # Compare answers and adjust score accordingly
+      
         if selected_answer == correct_answer:
-            score += 10  # Correct answer, increase score by 10
+            score += 10 
         else:
             if score > 5:
                 score -= 5
             else:
-                score = 0  # Incorrect answer, decrease score by 5
+                score = 0 
 
-    # Update the score in MongoDB
+   
     collection.update_one({'username': username}, {'$set': {'quiz-score': score}})
 
 
 
-    # Manage question flow
-    if len(showed) < 40:  # Continue until 40 questions are displayed
-        # Mark the current question as answered
+   
+    if len(showed) < 40:
+       
         showed.append(not_showed[0])
 
-        # Move to the next question index
-        next_question_index = not_showed[1] if len(not_showed) > 1 else None  # Get the next index from not_showed
+       
+        next_question_index = not_showed[1] if len(not_showed) > 1 else None 
 
         if next_question_index is not None:
-            # Update not_showed to remove the answered question
+           
             not_showed = not_showed[1:]
 
-            # Increment question number
+          
             question_number += 1
 
-            # Return the next question
+          
             return render_template('quiz.html', gather=json_data, index=next_question_index, qnum=question_number, button='next')
         else:
-            # If no more questions, reset or move to the submission page
+           
             reset_quiz_state()
             return redirect(url_for('submit'))
     else:
-        # End the quiz and submit answers
+      
         reset_quiz_state()
 
         return redirect(url_for('submit'))
@@ -269,17 +270,17 @@ def quizz():
 
     
 def reset_quiz_state():
-    # Reset the quiz state for the next attempt
+   
     global showed, question_number, unique_random_integer, score, not_showed
     showed = []
     question_number = 1
     unique_random_integer = 0
     score = 0
-    not_showed = generate_question_order()  # Assuming you have a function to regenerate the question order
+    not_showed = generate_question_order() 
 
 def generate_question_order():
-    # Logic for generating a shuffled list of question indices (not_showed)
-    return list(range(len(load_json('data/questions.json'))))  # Replace with actual logic to create question order
+   
+    return list(range(len(load_json('data/questions.json'))))  
 
 
 

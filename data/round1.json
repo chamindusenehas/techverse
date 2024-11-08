@@ -1,0 +1,73 @@
+[
+    {
+        "Biology":
+                [{
+                    "question": "ක්‍රමලේඛනයේදී විශාල කාර්‍යයක් කුඩා, කළමනාකරණය කළ හැකි ඒකකවලට බෙදීමේ පරිචය සඳහා වන යෙදුම කුමක්ද?",
+                    "options": ["Complication", "Fragmentation", "Disintegration", "Modularization"],
+                    "answer": "Modularization"
+                },
+                {
+                    "question": "පහත ඒවායින් NOSQL දත්ත සමුදායක් සඳහා නිදසුනක් වන්නේ?",
+                    "options": ["MySQL", "Oracle", "PostgreSQL", "MangoDB"],
+                    "answer": "MangoDB"
+                },
+                {
+                    "question": "ජාලකරණයේදී OSI යන කෙටි යෙදුමෙන් අදහස් කරන්නේ කුමක්ද?",
+                    "options": ["Open Source Interconnection", "Operational System Integration", "Open Systems Interconnection", "Online Service Interface"],
+                    "answer": "Open Systems Interconnection"
+                },
+                {
+                    "question": "Melissa වෛරසය සාමාන්‍යයෙන් වෙස්වලා ගන්නේ කුමන ආකාරයේ ගොනුවක් ලෙසද?",
+                    "options": ["JPEG රූපයක් ලෙස", "වදන් සැකසුම් ලේඛනයක් ලෙස", "ක්‍රියාත්මක කළ හැකි වැඩසටහනක් ලෙස", "PDF ගොනුවක් ලෙස"],
+                    "answer": "වදන් සැකසුම් ලේඛනයක් ලෙස"
+                },
+                {
+                    "question": "සම්බන්ධිත දත්ත සමුදායකදී වගුවක් සම්පූර්ණයෙන්ම ඉවත් කිරීමට භාවිත කරන විධානය කුමක්ද?",
+                    "options": ["DELETE TABLE", "DROP TABLE", "REMOVE TABLE", "CLEAR TABLE"],
+                    "answer": "DROP TABLE"
+                },
+                {
+                    "question": "Load Balancer හි මූලික කාර්‍යය වනුයේ කුමක්ද?",
+                    "options": ["ගබඩා ධාරිතාවය වැඩි කිරීම", "බහු සේවාදායකයක් හරහා ජාල හෝ යෙදුම් ගමනාගමනය බෙදා හැරීම", "සේවාදායකයක දත්ත උපස්ථ කිරීම", "දත්ත සමුදායක් කළමණාකරණය කිරීම"],
+                    "answer": "බහු සේවාදායකයක් හරහා ජාල හෝ යෙදුම් ගමනාගමනය බෙදා හැරීම"
+                },
+                {
+                    "question": "නිශ්චිත කාර්‍යයක් ඉටු කිරීම සඳහා නිර්මාණය කර ඇති නමුත් සාමාන්‍ය බුද්ධිය නොමැති AI වර්ගය කුමක්ද?",
+                    "options": ["Artificial Genoval Intelligence (AGI)", "Narrow AI", "Strong AI", "superintelligence"],
+                    "answer": "Narrow AI"
+                },
+                {
+                    "question": "මෘදුකාංග සංවර්ධනයේදී agile යන යෙදුමෙන් සඳහන් කරන්නේ කුමක්ද?",
+                    "options": ["ක්‍රමලේඛ භාෂාවකි", "මෘදුකාංග බලපත්‍ර වර්ගයකි", "දත්ත සමුදාය කළමණාකරණය සඳහා රාමුවකි", "පුනරාවර්තන සහ වර්ධක සංවර්ධනය සඳහා ක්‍රමවේදයකි"],
+                    "answer": "පුනරාවර්තන සහ වර්ධක සංවර්ධනය සඳහා ක්‍රමවේදයකි"
+                },
+                {
+                    "question": "Sophia රොබෝව නිර්මාණය කරනු ලැබුවේ කුමන සමාගම විසින්ද?",
+                    "options": ["Tesla", "Boston Dynamics", "Hanson Robotics", "Google AI"],
+                    "answer": "Hanson Robotics"
+                },
+                {
+                    "question": "දෝෂ අවම කිරීම මගින් දත්තවල රටා සෙවීමට AI හි බොහෝවිට භාවිතා කරන ඇල්ගොරිතම මොනවාද?",
+                    "options": ["Linear Regression", "Bubble Sort", "Binary Search", "Depth – First Search"],
+                    "answer": "Linear Regression"
+                }]
+            
+        
+    },
+    {
+        "Chemistry":{
+
+
+        }
+    },
+    {
+        "Physics":{
+
+        }
+    },
+    {
+        "Mathematics":{
+
+        }
+    }
+]

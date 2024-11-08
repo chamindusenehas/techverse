@@ -19,7 +19,7 @@ collection3 = db['players']
 
 
 def load_json(filename):
-    with open(filename, 'r') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
@@ -42,10 +42,10 @@ def submit():
     global username
     global password
     global collection
+    global round1,round2
     username = request.form['username']
     password = request.form['password']
     try:
-        school = request.form['school']
         x = 0
         for y in collection.find({'username':username}):
             if y['username'] == username:
@@ -58,12 +58,12 @@ def submit():
             collection.insert_one({
                 'username': username,
                 'password': password,
-                'school': school,
-                'used-time': 0,
+                'school': username,
                 'quiz-score': 0,
-                'ai-score':0,
-                'web-score':0,
-                'cyber-score':0,
+                'Biology-score':0,
+                'Chemistry-score':0,
+                'Mathematics-score':0,
+                'Physics-score':0
                 }
             )
             return render_template('main.html')
@@ -80,8 +80,9 @@ def submit():
 
 @app.route('/submit',methods=['GET'])
 def submitt():
+    global round1,round2
     collection3.delete_many({})
-    return render_template('main.html',text='yes')
+    return render_template('main.html',text='yes',)
 
 question_number = 1
 showed = []
@@ -166,12 +167,130 @@ def checker():
     else:
         return jsonify({'start_quiz': False})
     
-
+subjected =[]
  
 
 @app.route('/subject')
-def subject():
-    return render_template('subject.html')
+def subjecteddd():
+    global subjected
+    return render_template('subject.html',used=subjected)
+
+round1 = False
+round2 = False
+
+
+@app.route('/touching', methods=['POST'])
+def touching():
+    global round1, round2
+    round = request.json.get('round')
+    
+    if round == 1 and not round1:
+        round1 = True
+    elif round == 2 and not round2:
+        round2 = True
+    
+    return jsonify({"round1_locked": round1, "round2_locked": round2})
+
+
+subject = None
+
+
+@app.route('/select_subject', methods=['POST'])
+def select_subject():
+    global subject
+    data = request.get_json()
+    subject = data.get('subject')
+    if subject:
+        return jsonify({"success": True,'subject':subject})
+    else:
+        return jsonify({"success": False, "message": "Subject not found"})
+
+
+
+@app.route('/numbers', methods=['GET'])
+def select_subjec2t():
+    global subject,qnums,qnumber
+    return render_template('numbers.html',subjective=subject ,qnums=qnums)
+
+
+
+
+
+def save_json(filename, data):
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=4)
+
+
+
+
+
+json_data = load_json('data/round1.json')
+selected_question = None
+count = 0
+qnumber = None
+qnums = []
+
+@app.route('/submit_question', methods=['POST'])
+def submit_question():
+    global subject, selected_question, count, qnumber, qnums
+    data = request.get_json()
+    qnumber = data.get('qnumber')
+    qnums.append(qnumber+1)
+
+    # Initialize bomb with a default value (like -1 or some other indicator of failure)
+    bomb = -1
+
+    # Check which subject and assign corresponding bomb value
+    if subject == 'Biology':
+        bomb = 0
+    elif subject == 'Chemistry':
+        bomb = 1
+    elif subject == 'Physics':
+        bomb = 2
+    elif subject == 'Mathematics':
+        bomb = 3
+
+    # Check if bomb was assigned a valid value
+    if bomb == -1:
+        return jsonify({"message": "Invalid subject"}), 400
+
+    # Now proceed with accessing the questions
+    questions = json_data[bomb][subject]
+
+
+    selected_question = questions[qnumber]
+    count += 1
+    return jsonify({"redirect": url_for('question_page')})
+
+
+@app.route('/question_page')
+def question_page():
+    global selected_question
+    return render_template('question_page.html',question=selected_question)
+
+
+@app.route('/submit_answer',methods=['POST'])
+def submit_answer():
+    global subjected,subject,count,qnums
+    answer = request.form.get('selected_answer')
+    trueAnswer = selected_question['answer']
+    print(answer)
+    print(trueAnswer)
+    print(username)
+    if answer == trueAnswer:
+        score = 10
+    else:
+        score = 0
+    collection.update_one({f'username': username}, {'$inc': {f'{subject}_score': score}})
+    if count < 8:
+        print(count)
+        return redirect('/numbers')
+    else:
+        subjected.append(subject)
+        count = 0
+        qnums = []
+        return redirect('/subject')
+
 
 
 

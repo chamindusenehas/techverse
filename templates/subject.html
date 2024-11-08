@@ -5,76 +5,166 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Subject Cards</title>
   <style>
- 
- * {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
-    
-   
+
     body {
-      background-color: #1a1a1a;
+      background-color: #121212;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
+      color: #fff;
     }
 
     .container {
-        
-
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        width: 90vw;
-        height: 90vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 90vw;
+      max-width: 800px;
+      height: 70vh;
+      max-height: 500px;
     }
 
     .card {
       position: relative;
       display: flex;
-        border-radius: 20px;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-size: cover;
-      background-position: center;
+      border-radius: 15px;
+      background-color: #333;
       color: #e0e0e0;
-      font-size: 2em;
+      font-size: 1.2em;
       font-weight: bold;
       text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
       cursor: pointer;
+      padding: 20px;
       transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
     }
+
     .card img {
-        width: 100px;
-        height: 100px;
+      width: 240px;
+      height: 180px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.1);
     }
 
     .card:hover {
       transform: scale(1.05);
-      background-blend-mode: overlay;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(132, 159, 201, 0.416);
+      box-shadow: 0 12px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:active {
+      transform: scale(0.98);
+    }
+
+    .touchability {
+      pointer-events: none;
+      filter: brightness(0.5);
+    }
+
+    /* "Completed" button styles */
+    #complete {
+      padding-top: 12px;
+      width: 180px;
+      height: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      background-color: #979797;
+      border: 2px solid #979797;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      bottom: 30px;
+    }
+
+    #complete:hover {
+      background-color: #1f1f21;
+      color: white;
+      border-color: #1f1f21;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #complete:active {
+      transform: scale(0.95);
+    }
+    
+    /* Center text in the button */
+    #complete span {
+      display: inline-block;
+      line-height: 50px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="card" onclick="enterSubject('Biology')"><img src="{{ url_for('static', filename='images/DNA-Genetics.webp') }}"><br>Biology</div>
-    <div class="card" onclick="enterSubject('Mathematics')"><img src="{{ url_for('static', filename='images/fItrOO.gif') }}"><br>Mathematics</div>
-    <div class="card" onclick="enterSubject('Physics')"><img src="{{ url_for('static', filename='images/200w.gif') }}"><br>Physics</div>
-    <div class="card" onclick="enterSubject('Chemistry')"><img src="{{ url_for('static', filename='images/chemistry-chemist-at-work-2018.gif') }}"><br>Chemistry</div>
+    <div class="card {% if 'Biology' in used %}touchability{% endif %}" onclick="enterSubject('Biology')">
+      <img src="{{ url_for('static', filename='images/DNA-Genetics.webp') }}" alt="Biology">
+      <span>Biology</span>
+    </div>
+    <div class="card" onclick="enterSubject('Mathematics')">
+      <img src="{{ url_for('static', filename='images/fItrOO.gif') }}" alt="Mathematics">
+      <span>Mathematics</span>
+    </div>
+    <div class="card" onclick="enterSubject('Physics')">
+      <img src="{{ url_for('static', filename='images/200w.gif') }}" alt="Physics">
+      <span>Physics</span>
+    </div>
+    <div class="card" onclick="enterSubject('Chemistry')">
+      <img src="{{ url_for('static', filename='images/chemistry-chemist-at-work-2018.gif') }}" alt="Chemistry">
+      <span>Chemistry</span>
+    </div>
   </div>
 
+  <div id="complete"><center>completed</center></div>
+
   <script>
-    
-
-
+    document.getElementById('complete').addEventListener('click',()=>{
+      window.location.href = '/submit';
+    })
+    let count = 0;
+    function sendDataToServer(subject) {
+      fetch('/select_subject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject: subject })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          
+            window.location.href = '/numbers';
+          
+        } else {
+          alert("Failed to select " + subject + ".");
+        }
+      })
+      .catch(error => console.error("Error:", error));
+    }
 
     function enterSubject(subject) {
+      count +=1 
       sendDataToServer(subject);
-
     }
   </script>
 </body>

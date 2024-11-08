@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Selector</title>
+    <style>
+        .button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .locked {
+            background-color: red;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: brightness(0.5);
+        }
+        label{
+            display: none;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1c1c1e;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-size: 2em;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Button Container */
+        #question-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 600px;
+            justify-content: center;
+        }
+
+        /* Button Styles */
+        .button {
+            padding: 15px;
+            width: 60px;
+            height: 60px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button:hover {
+            background-color: #5ed060;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+            background-color: #4caf50;
+        }
+
+        /* Locked Button Styles */
+        .locked {
+            background-color: #ff5555;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: brightness(0.75);
+            box-shadow: none;
+            transform: scale(1);
+        }
+
+        /* Hide Labels */
+        label {
+            display: none;
+        }
+
+        /* Animation for buttons */
+        .button {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>{{subjective}}</h1>
+    <form id="question-form">
+        <label for="button1">hey</label>
+        <button type="button" name="qnumber" value="0" id="button1" class="button {% if 1 in qnums %} locked {% endif %}" onclick="submitQuestion(0)">1</button>
+
+        <label for="button2">hey</label>
+        <button type="button" name="qnumber" value="1" id="button2" class="button {% if 2 in qnums %} locked {% endif %}" onclick="submitQuestion(1)">2</button>
+
+        <label for="button3">hey</label>
+        <button type="button" name="qnumber" value="2" id="button3" class="button {% if 3 in qnums %} locked {% endif %}" onclick="submitQuestion(2)">3</button>
+
+        <label for="button4">hey</label>
+        <button type="button" name="qnumber" value="3" id="button4" class="button {% if 4 in qnums %} locked {% endif %}" onclick="submitQuestion(3)">4</button>
+
+        <label for="button5">hey</label>
+        <button type="button" name="qnumber" value="4" id="button5" class="button {% if 5 in qnums %} locked {% endif %}" onclick="submitQuestion(4)">5</button>
+
+        <label for="button6">hey</label>
+        <button type="button" name="qnumber" value="5" id="button6" class="button {% if 6 in qnums %} locked {% endif %}" onclick="submitQuestion(5)">6</button>
+
+        <label for="button7">hey</label>
+        <button type="button" name="qnumber" value="6" id="button7" class="button {% if 7 in qnums %} locked {% endif %}" onclick="submitQuestion(6)">7</button>
+
+        <label for="button8">hey</label>
+        <button type="button" name="qnumber" value="7" id="button8" class="button {% if 8 in qnums %} locked {% endif %}" onclick="submitQuestion(7)">8</button>
+    </form>
+
+    <script>
+        async function submitQuestion(qnumber) {
+            try {
+                const response = await fetch('/submit_question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ qnumber })
+                });
+
+                if (response.ok) {
+                    document.getElementById(`button${qnumber + 1}`).classList.add('locked');
+                    window.location.href = '/question_page'
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

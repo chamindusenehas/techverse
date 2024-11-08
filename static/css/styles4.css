@@ -165,10 +165,10 @@ body {
     pointer-events: none;
 }
 
-/* .locked {
+.locked {
     filter: brightness(0.5);
     pointer-events: none;
-} */
+}
 
 #boody{
     pointer-events: none;

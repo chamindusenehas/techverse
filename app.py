@@ -281,8 +281,8 @@ def submit_answer():
         score = 10
     else:
         score = 0
-    collection.update_one({f'username': username}, {'$inc': {f'{subject}_score': score}})
-    if count < 8:
+    collection.update_one({f'username': username}, {'$inc': {f'{subject}-score': score}})
+    if count < 4:
         print(count)
         return redirect('/numbers')
     else:

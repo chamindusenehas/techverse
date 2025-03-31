@@ -1,4 +1,4 @@
-<h1>Techverse - Questioneer </h1>
+<h1>Techverse - Questionnaire  </h1>
 this is a flask web application developed to maintain and automate quiz competition.
 
 <h3>how it works:</h3>
